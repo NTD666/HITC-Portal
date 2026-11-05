@@ -38,7 +38,7 @@ Hệ thống tự động xử lý và kết xuất ra 3 khu vực trực quan t
 
 **Bước 1: Di chuyển đường dẫn Terminal vào đúng thư mục chứa dự án**
 ```bash
-cd DUAN
+cd DUAN-main
 ```
 
 **Bước 2: Tiến hành cài đặt đồng bộ các thư viện phụ thuộc bắt buộc**
