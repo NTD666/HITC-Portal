@@ -166,19 +166,67 @@ else:
         col1, col2 = st.columns(2)
         with col1:
             date = st.date_input("Ngày đánh giá", datetime.date.today())
-            semester = st.selectbox("Học kỳ đánh giá", ["Học kỳ I", "Học kỳ II", "Học kỳ III", "Học kỳ IV", "Học kỳ V", "Học kỳ VI"])
-            subject = st.selectbox("Môn học (Chương trình đào tạo HITC)", [
-                # --- Nhóm môn Đại cương ---
-                "Triết học Mác - Lênin", "Chính trị học", "Pháp luật đại cương", 
-                "Tin học đại cương", "Tiếng Anh giao tiếp", "Giáo dục thể chất", "Giáo dục quốc phòng - An ninh",
-                # --- Nhóm môn Cơ sở ngành ---
-                "Toán ứng dụng CNTT", "Kiến trúc máy tính & Hệ điều hành", "Mạng máy tính cơ bản", 
-                "Cơ sở dữ liệu (SQL Server)", "Cấu trúc dữ liệu và Giải thuật",
-                # --- Nhóm môn Chuyên ngành CNTT / Phần mềm ---
-                "Ngôn ngữ lập trình Python", "Lập trình hướng đối tượng (OOP)", 
-                "Thiết kế & Lập trình Web (HTML/CSS/JS)", "Lập trình ứng dụng Di động", 
-                "Kiểm thử phần mềm", "Thực tập tốt nghiệp", "Đồ án tốt nghiệp"
+            semester = st.selectbox("Học kỳ đánh giá", [
+                "Học kỳ I", "Học kỳ II", "Học kỳ III", "Học kỳ IV", "Học kỳ V", "Học kỳ VI", "Học kỳ Phụ / Cải thiện"
             ])
+            subject = st.selectbox("Môn học (Chương trình đào tạo Khoa CNTT - HITC)", [
+                # --- 1. Khối Kiến thức Đại cương & Kỹ năng ---
+                "Triết học Mác - Lênin",
+                "Tư tưởng Hồ Chí Minh",
+                "Pháp luật đại cương",
+                "Tin học đại cương",
+                "Tiếng Anh cơ bản 1",
+                "Tiếng Anh cơ bản 2",
+                "Tiếng Anh chuyên ngành CNTT",
+                "Kỹ năng mềm & Làm việc nhóm",
+                "Giáo dục thể chất",
+                "Giáo dục quốc phòng - An ninh",
+                
+                # --- 2. Khối Cơ sở ngành CNTT ---
+                "Toán ứng dụng CNTT (Toán rời rạc)",
+                "Nhập môn lập trình (C/C++)",
+                "Kỹ thuật lập trình (C/C++)",
+                "Kiến trúc máy tính & Vi xử lý",
+                "Hệ điều hành (Windows & Linux)",
+                "Lắp ráp, cài đặt & Bảo trì máy tính",
+                "Mạng máy tính cơ bản",
+                "Quản trị mạng máy tính (CCNA)",
+                "Cơ sở dữ liệu (SQL Server)",
+                "Hệ quản trị CSDL MySQL",
+                "Cấu trúc dữ liệu và Giải thuật",
+                "Thiết kế đồ họa đa phương tiện (Photoshop / AI)",
+                
+                # --- 3. Khối Chuyên ngành Lập trình & Kỹ thuật Phần mềm ---
+                "Ngôn ngữ lập trình Python",
+                "Lập trình hướng đối tượng (OOP Java / C#)",
+                "Lập trình Windows Forms & .NET Core",
+                "Phân tích & Thiết kế hệ thống thông tin",
+                "Thiết kế Web căn bản (HTML5/CSS3/JavaScript)",
+                "Lập trình Web Frontend (ReactJS / VueJS)",
+                "Lập trình Web Backend (PHP & Laravel / NodeJS)",
+                "Lập trình Web ASP.NET Core MVC / Web API",
+                "Thiết kế trải nghiệm & Giao diện UI/UX (Figma)",
+                "Lập trình ứng dụng Di động (Android / Kotlin)",
+                "Lập trình ứng dụng Di động đa nền tảng (Flutter)",
+                "Kiểm thử và Đảm bảo chất lượng phần mềm (QA/QC)",
+                
+                # --- 4. Khối Chuyên ngành Mạng & An toàn thông tin ---
+                "An toàn & Bảo mật thông tin mạng",
+                "Quản trị máy chủ Linux & Windows Server",
+                "Điện toán đám mây & DevOps căn bản (Docker/AWS)",
+                "Trí tuệ nhân tạo (AI) & Học máy (Machine Learning)",
+                "Khai phá dữ liệu & Phân tích dữ liệu lớn",
+                
+                # --- 5. Khối Thực tập & Khóa luận Tốt nghiệp ---
+                "Chuyên đề công nghệ mới",
+                "Thực tập tốt nghiệp tại doanh nghiệp",
+                "Đồ án chuyên ngành CNTT",
+                "Đồ án / Khóa luận tốt nghiệp",
+                
+                # --- 6. Tùy chọn mở rộng ---
+                "📌 [Môn học khác - Nhập tên bên dưới]"
+            ])
+            custom_subject = st.text_input("Hoặc nhập tên môn khác nếu chưa có trong danh sách:", placeholder="Ví dụ: Lập trình Game Unity, Lập trình iOS...")
         with col2:
             score = st.number_input("Điểm số thành phần", min_value=0.0, max_value=10.0, step=0.5, value=7.0)
             grade_type = st.selectbox("Loại điểm đánh giá", ["Điểm chuyên cần (10%)", "Điểm kiểm tra giữa kỳ (30%)", "Điểm thi kết thúc học phần (60%)"])
@@ -186,9 +234,20 @@ else:
         submit_button = st.form_submit_button(label="🚀 Cập nhật kết quả")
 
     if submit_button:
-        new_data = pd.DataFrame([{"Ngày nhập": date.strftime("%Y-%m-%d"), "Học kỳ": semester, "Môn học": subject, "Điểm số": float(score), "Loại điểm": grade_type}])
-        st.session_state.academic_records = pd.concat([st.session_state.academic_records, new_data], ignore_index=True)
-        st.success("Hệ thống HITC Portal đã đồng bộ dữ liệu điểm số thành công!")
+        # Xác định tên môn học cuối cùng
+        if custom_subject.strip() != "":
+            final_subject = custom_subject.strip()
+        elif subject == "📌 [Môn học khác - Nhập tên bên dưới]":
+            st.error("❌ Vui lòng nhập tên môn học vào ô bên dưới khi chọn tùy chọn 'Môn học khác'!")
+            final_subject = None
+        else:
+            final_subject = subject
+
+        if final_subject:
+            new_data = pd.DataFrame([{"Ngày nhập": date.strftime("%Y-%m-%d"), "Học kỳ": semester, "Môn học": final_subject, "Điểm số": float(score), "Loại điểm": grade_type}])
+            st.session_state.academic_records = pd.concat([st.session_state.academic_records, new_data], ignore_index=True)
+            st.success(f"Hệ thống HITC Portal đã đồng bộ điểm số môn '{final_subject}' thành công!")
+
 
     # HIỂN THỊ KẾT QUẢ TRA CỨU
     st.divider()
