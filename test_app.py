@@ -1,4 +1,8 @@
+import sys
 import pandas as pd
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 def test_calculate_average_score():
     # Giả lập dữ liệu điểm số đầu vào (Input)

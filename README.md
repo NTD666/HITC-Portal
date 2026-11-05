@@ -1,83 +1,195 @@
-# 🎓 Ứng Dụng Quản Lý Tiến Độ Học Tập & Điểm Số (Web App Version)
+# 🎓 HITC Portal - Cổng Thông Tin & Quản Lý Tiến Độ Học Tập Sinh Viên
 
-## 🎯 1. Giới thiệu tổng quan về dự án
-Dự án **Ứng dụng Quản lý Tiến độ Học tập & Điểm số** là một sản phẩm mã nguồn mở (Open Source) được xây dựng hoàn toàn bằng ngôn ngữ lập trình **Python** kết hợp với thư viện **Streamlit**. 
+<div align="center">
 
-Ứng dụng được thiết kế ra nhằm giải quyết bài toán thực tế của sinh viên trong việc tự theo dõi, ghi chép nhật ký điểm số của các bài kiểm tra hằng ngày. Hệ thống tích hợp thuật toán xử lý dữ liệu thông minh để tự động tính toán điểm trung bình tích lũy (GPA) và trực quan hóa năng lực học tập của người dùng thông qua hệ thống biểu đồ tương tác thời gian thực.
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Altair](https://img.shields.io/badge/Altair-4B8BBE?style=for-the-badge&logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Trạng_thái-Hoàn_thiện-success?style=for-the-badge)
+![License](https://img.shields.io/badge/Giấy_phép-MIT-blue?style=for-the-badge)
 
----
+<p align="center">
+  <b>Hệ thống Web App theo dõi tiến độ, nhật ký điểm số và phân tích năng lực học tập dành cho sinh viên Trường Cao đẳng Công thương TP.HCM (HITC)</b>
+</p>
 
-## 🛠️ 2. Công nghệ và Thư viện sử dụng
-Dự án tuân thủ tiêu chí tối ưu hóa hiệu năng, giao diện sạch đẹp và quản lý thư viện phụ thuộc chặt chẽ thông qua file `requirements.txt`:
-- **Ngôn ngữ cốt lõi:** Python (Phiên bản 3.8 trở lên).
-- **Giao diện người dùng (Frontend & Backend):** `Streamlit` - Thư viện mã nguồn mở giúp chuyển đổi kịch bản dữ liệu thành giao diện Web App tương tác chỉ bằng mã Python.
-- **Xử lý dữ liệu:** `Pandas` - Thư viện cấu trúc dữ liệu hiệu năng cao hỗ trợ quản lý, lọc và phân tích bảng dữ liệu (Data Frame) điểm số một cách khoa học.
+[Tính Năng](#-tính-năng-nổi-bật) • [Công Nghệ](#-công-nghệ-sử-dụng) • [Cài Đặt & Chạy](#-hướng-dẫn-cài-đặt--khởi-chạy-cục-bộ) • [Kiểm Thử](#-hệ-thống-kiểm-thử-tự-động) • [Triển Khai Server](#-hướng-dẫn-triển-khai-lên-server-cloud) • [Tác Giả](#-tác-giả--bản-quyền)
 
----
-
-## 📥 3. Mô tả chi tiết Luồng Dữ liệu (Input / Output)
-
-### 🔹 Đầu vào của hệ thống (Input Data)
-Người dùng nhập liệu trực tiếp thông qua một Form biểu mẫu an toàn trên giao diện Web:
-1. **Ngày đánh giá (`Date Input`):** Định dạng ngày hệ thống (Năm-Tháng-Ngày), tự động lấy ngày hiện tại làm mặc định.
-2. **Môn học (`Select Box`):** Menu thả xuống chứa danh sách các môn học cốt lõi (Ngôn ngữ Python, Cấu trúc dữ liệu & Giải thuật, Cơ sở dữ liệu, Trí tuệ nhân tạo, Toán cao cấp, hoặc Môn học khác).
-3. **Điểm số (`Number Input`):** Kiểu số thực (Float) giới hạn nghiêm ngặt trong thang điểm từ `0.0` đến `10.0`, bước tăng giảm `0.5`.
-4. **Ghi chú/Đánh giá (`Text Input`):** Chuỗi ký tự tự do giúp phân loại bài kiểm tra (Ví dụ: Kiểm tra giữa kỳ, Bài tập lớn số 1, Thi cuối kỳ).
-
-### 🔹 Đầu ra của hệ thống (Output Data)
-Hệ thống tự động xử lý và kết xuất ra 3 khu vực trực quan trên màn hình:
-1. **Chỉ số GPA Tích lũy (`st.metric`):** Điểm trung bình cộng của tất cả các môn học hiện tại, tự động tính toán lại sau mỗi lần người dùng thêm dữ liệu mới và hiển thị nổi bật kèm định dạng làm tròn 2 chữ số thập phân.
-2. **Bảng điểm chi tiết (`st.dataframe`):** Cấu trúc bảng dữ liệu sạch (Data Table) hiển thị toàn bộ lịch sử học tập, hỗ trợ người dùng lọc dữ liệu hoặc sắp xếp thứ tự điểm số tăng/giảm dần trực tiếp trên giao diện web.
-3. **Biểu đồ trực quan (`st.bar_chart`):** Biểu đồ cột (Bar Chart) tự động gom nhóm dữ liệu theo từng môn học và tính điểm trung bình riêng của môn đó, giúp sinh viên nhận biết ngay phong độ học tập của mình.
+</div>
 
 ---
 
-## 🚀 4. Hướng dẫn các bước khởi chạy dự án tại máy cục bộ (Local)
+## 📖 1. Giới thiệu tổng quan
 
-Để chạy thử nghiệm ứng dụng ngay trên máy tính cá nhân của bạn, hãy mở công cụ dòng lệnh (Terminal/CMD) lên và thực hiện chính xác 3 bước sau:
+**HITC Portal** là ứng dụng Web quản lý học tập thông minh được xây dựng bằng ngôn ngữ **Python** kết hợp với nền tảng **Streamlit**. 
 
-**Bước 1: Di chuyển đường dẫn Terminal vào đúng thư mục chứa dự án**
-```bash
-cd DUAN-main
+Dự án ra đời nhằm giải quyết nhu cầu thực tế của sinh viên trong việc:
+* Ghi chép nhật ký điểm số các học phần theo từng học kỳ.
+* Tự động tính toán điểm trung bình tích lũy (GPA) và phân loại học lực tức thì.
+* Trực quan hóa dữ liệu điểm qua biểu đồ phân tích năng lực học tập đa chiều.
+* Trải nghiệm giao diện thân thiện, hiện đại mang đậm bản sắc thương hiệu của **Trường Cao đẳng Công thương TP.HCM (HITC)**.
+
+---
+
+## ✨ 2. Tính năng nổi bật
+
+### 🔑 Xác thực & Thông tin Sinh viên
+- Đăng nhập xác thực thông tin sinh viên với **Họ tên**, **Mã số sinh viên (MSSV)** và **Lớp sinh hoạt**.
+- Bảng thông tin sinh viên (Profile Card) trực quan ngay tại Sidebar kèm chức năng Đăng xuất an toàn.
+- Quản lý phiên làm việc thông qua `st.session_state`.
+
+### 🎨 Bộ nhận diện HITC & Chế độ Sáng / Tối (Dark Mode)
+- **Tùy biến giao diện linh hoạt:** Cho phép người dùng chuyển đổi tức thì giữa **Giao diện Sáng (Light)** và **Giao diện Tối (Dark Mode)** ngay tại thanh công cụ.
+- **Phong cách thương hiệu đặc trưng:** Sử dụng bảng màu chuẩn của HITC với tone **Đỏ đô (#A31D1D)** kết hợp **Vàng ánh kim (#E8B86D)**, bo góc mềm mại, đổ bóng hiện đại.
+
+### 📥 Quản lý & Cập nhật Điểm số Học phần
+- Lựa chọn ngày đánh giá (tự động lấy ngày hiện tại).
+- Phân loại theo **Học kỳ đào tạo** (từ Học kỳ I đến Học kỳ VI).
+- Danh mục môn học chuẩn theo **khung chương trình đào tạo Khoa CNTT - HITC**:
+  - *Nhóm Đại cương:* Triết học Mác - Lênin, Pháp luật đại cương, Tin học đại cương, Tiếng Anh giao tiếp...
+  - *Nhóm Cơ sở ngành:* Toán ứng dụng CNTT, Kiến trúc máy tính & Hệ điều hành, Mạng máy tính, Cơ sở dữ liệu (SQL Server), Cấu trúc dữ liệu và Giải thuật...
+  - *Nhóm Chuyên ngành:* Lập trình Python, OOP, Thiết kế Web (HTML/CSS/JS), Lập trình Di động, Kiểm thử phần mềm, Đồ án tốt nghiệp...
+- Phân loại trọng số điểm đánh giá:
+  - Điểm chuyên cần (10%)
+  - Điểm kiểm tra giữa kỳ (30%)
+  - Điểm thi kết thúc học phần (60%)
+
+### 📊 Thống kê & Đánh giá Năng lực Tự động
+- **Tính toán GPA tự động:** Cập nhật điểm trung bình cộng tích lũy theo thời gian thực (làm tròn 2 chữ số thập phân).
+- **Phân loại học lực theo chuẩn:**
+  - `GPA >= 8.5`: Xuất sắc 🏆
+  - `GPA >= 8.0`: Giỏi 🥇
+  - `GPA >= 6.5`: Khá 🥈
+  - `GPA >= 5.0`: Trung bình 🥉
+  - `GPA < 5.0`: Yếu
+- **Bảng điểm chi tiết:** Trình bày dạng bảng (`st.dataframe`) hỗ trợ tìm kiếm, lọc và sắp xếp trực tiếp trên web.
+
+### 📈 Biểu đồ trực quan tương tác
+- Tích hợp biểu đồ phân tích năng lực môn học bằng thư viện **Altair**.
+- Thiết kế nhãn trục ngang cố định (`labelAngle=0`) giúp sinh viên dễ dàng quan sát điểm số từng môn mà không bị rối mắt.
+- Hỗ trợ tooltip xem chi tiết điểm số khi rê chuột.
+
+---
+
+## 🛠️ 3. Công nghệ sử dụng
+
+| Công nghệ / Thư viện | Phiên bản | Vai trò trong hệ thống |
+| :--- | :--- | :--- |
+| **Python** | 3.8+ | Ngôn ngữ lập trình cốt lõi |
+| **Streamlit** | Latest | Framework xây dựng giao diện Web tương tác cao |
+| **Pandas** | Latest | Xử lý cấu trúc bảng dữ liệu điểm (DataFrame), tổng hợp số liệu |
+| **Altair** | Latest | Xây dựng đồ thị trực quan hóa dữ liệu tương tác chuyên sâu |
+
+---
+
+## 📂 4. Cấu trúc thư mục dự án
+
+```text
+DUAN-main/
+│
+├── .gitignore              # Danh sách các file/thư mục bỏ qua khi đẩy lên Git
+├── README.md               # Tài liệu hướng dẫn sử dụng và giới thiệu dự án
+├── requirements.txt        # Danh mục thư viện phụ thuộc bắt buộc
+├── app.py                  # Mã nguồn chính của ứng dụng HITC Portal
+└── test_app.py             # Kịch bản kiểm thử tự động thuật toán tính điểm
 ```
 
-**Bước 2: Tiến hành cài đặt đồng bộ các thư viện phụ thuộc bắt buộc**
+---
+
+## 🚀 5. Hướng dẫn Cài đặt & Khởi chạy cục bộ
+
+Để chạy ứng dụng trên máy tính của bạn, hãy thực hiện tuần tự các bước sau:
+
+### Bước 1: Sao chép (Clone) hoặc Tải dự án
+```bash
+git clone https://github.com/NTD666/HITC-Portal.git
+cd HITC-Portal
+```
+*(Nếu bạn đã tải sẵn thư mục `DUAN-main`, chỉ cần mở Terminal/PowerShell và trỏ vào thư mục này).*
+
+### Bước 2: Tạo môi trường ảo (Khuyến nghị)
+```bash
+# Trên Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Trên macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### Bước 3: Cài đặt các thư viện phụ thuộc
 ```bash
 pip install -r requirements.txt
 ```
-*(Hệ thống sẽ tự động quét file cấu hình để tải chính xác phiên bản thư viện Streamlit và Pandas tương thích).*
 
-**Bước 3: Khởi chạy Server và bật giao diện Web App**
+### Bước 4: Khởi chạy ứng dụng Web
 ```bash
 streamlit run app.py
 ```
-*Sau khi gõ lệnh, hệ thống sẽ tự động kích hoạt trình duyệt web của bạn và dẫn thẳng vào địa chỉ mạng nội bộ cục bộ:* `http://localhost:8501`
+
+Sau khi khởi chạy thành công, trình duyệt web sẽ tự động mở trang:
+```text
+Local URL: http://localhost:8501
+```
 
 ---
 
-## 🧪 5. Hướng dẫn vận hành Hệ thống Kiểm thử Tự động (Automation Test)
+## 🧪 6. Hệ thống Kiểm thử Tự động (Automated Testing)
 
-Dự án được tích hợp sẵn một file kiểm thử độc lập `test_app.py` để xác minh độ chính xác của thuật toán tính điểm trung bình trước khi triển khai phần mềm lên hệ thống thật. 
+Dự án đi kèm bộ kiểm thử độc lập trong file `test_app.py` nhằm xác minh tính chính xác của thuật toán tính điểm trung bình trước khi bàn giao hoặc đưa lên máy chủ.
 
-Để thực hiện kiểm thử tự động, bạn gõ câu lệnh sau:
+Chạy kiểm thử bằng lệnh:
 ```bash
 python test_app.py
 ```
-- **Kịch bản kiểm thử (Test Case):** Hàm sẽ tự động tạo ra một bảng dữ liệu giả lập chứa điểm môn Python (`9.0`) và môn Cơ sở dữ liệu (`7.0`). Sau đó đối sánh kết quả tính toán đầu ra với giá trị kỳ vọng là `8.0`.
-- **Kết quả thành công:** Terminal sẽ in ra thông báo đóng khung khẳng định logic cốt lõi đã **CHẠY ĐẠT (PASS 10/10)**.
+
+**Kịch bản kiểm thử (Test Case):**
+- Giả lập bảng dữ liệu với điểm môn *Ngôn ngữ Python (9.0)* và môn *Cơ sở dữ liệu (7.0)*.
+- Thuật toán xử lý tính trung bình: `(9.0 + 7.0) / 2 = 8.0`.
+- Đối sánh qua `assert`. Khi đạt chuẩn, hệ thống xuất thông báo xác nhận:
+```text
+============================================================
+ Chúc mừng! Hệ thống kiểm thử tự động đã CHẠY ĐẠT (PASS 10/10).
+============================================================
+```
 
 ---
 
-## ☁️ 6. Hướng dẫn Triển khai lên Mạng Internet (Deploy to Cloud)
+## ☁️ 7. Hướng dẫn Triển khai lên Server (Cloud)
 
-Ứng dụng hỗ trợ cơ chế đóng gói hoàn hảo để đưa lên nền tảng đám mây **Streamlit Community Cloud** miễn phí 24/7 chỉ với các bước sau:
-1. Đẩy toàn bộ mã nguồn sạch của thư mục này lên một Repository công khai (Public) trên tài khoản **GitHub** cá nhân của bạn.
-2. Truy cập vào trang web [share.streamlit.io](https://streamlit.io) và đăng nhập bằng tài khoản GitHub.
-3. Bấm chọn nút **Create app** -> Chọn đúng tên Repository vừa đẩy lên -> Thiết lập ô `Main file path` là `app.py`.
-4. Bấm nút **Deploy!** và hệ thống sẽ cấp cho bạn một đường link trang web trực tuyến công khai để chia sẻ cho mọi người.
+### Cách 1: Triển khai miễn phí qua Streamlit Community Cloud (Khuyên dùng)
+1. Đẩy mã nguồn lên tài khoản GitHub của bạn tại repository: `https://github.com/NTD666/HITC-Portal`.
+2. Truy cập [share.streamlit.io](https://share.streamlit.io) và đăng nhập bằng tài khoản GitHub.
+3. Nhấn **"Create app"** và điền cấu hình:
+   - **Repository:** `NTD666/HITC-Portal`
+   - **Branch:** `main`
+   - **Main file path:** `app.py`
+   - **App URL:** Tùy chọn tên miền (ví dụ: `hitc-portal.streamlit.app`).
+4. Nhấn **"Deploy!"**. Hệ thống sẽ tự động cài thư viện và tạo trang web trực tuyến hoạt động 24/7.
+
+### Cách 2: Triển khai qua Render / Railway / Cloud VPS
+Cấu hình lệnh khởi chạy (Start Command) với cổng động của server:
+```bash
+streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+```
 
 ---
 
-## ⚖️ 7. Tuyên bố Đạo đức & An toàn Bảo mật Dữ liệu
-- **Quyền riêng tư:** Ứng dụng hoạt động hoàn toàn dựa trên cơ chế bộ nhớ đệm phiên làm việc hiện tại (`st.session_state`). 
-- **Cam kết an toàn:** Hệ thống hoàn toàn không lưu trữ vĩnh viễn dữ liệu học tập lên bất kỳ máy chủ cơ sở dữ liệu bên thứ ba nào, bảo mật tuyệt đối 100% bảng điểm cá nhân và không thu thập hành vi người dùng, đảm bảo các quy chuẩn đạo đức an toàn thông tin phần mềm.
+## 🔒 8. Cam kết Quyền riêng tư & Bảo mật
+
+- **Không lưu trữ cơ sở dữ liệu ngoài:** Toàn bộ dữ liệu điểm số và thông tin cá nhân của phiên làm việc chỉ tồn tại trong bộ nhớ đệm `st.session_state` của trình duyệt.
+- **An toàn tuyệt đối:** Dữ liệu sẽ được làm mới khi kết thúc phiên hoặc đăng xuất, đảm bảo tính riêng tư và bảo mật thông tin cá nhân của sinh viên.
+
+---
+
+## 👨‍💻 9. Tác giả & Bản quyền
+
+- **Tác giả:** Nguyễn Tấn Dũng
+- **Đơn vị:** Khoa Công nghệ Thông tin - Trường Cao đẳng Công thương TP.HCM (HITC)
+- **Cơ sở đào tạo:** 20 Tăng Nhơn Phú, Phường Phước Long B, TP. Thủ Đức, TP. Hồ Chí Minh
+- **Giấy phép:** [MIT License](LICENSE)
+
+<div align="center">
+  <sub>© 2026 HITC Portal. Phát triển phục vụ cộng đồng sinh viên Cao đẳng Công thương TP.HCM.</sub>
+</div>
