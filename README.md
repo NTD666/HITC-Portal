@@ -69,6 +69,12 @@ Dự án ra đời nhằm giải quyết nhu cầu thực tế của sinh viên 
 - Thiết kế nhãn trục ngang cố định (`labelAngle=0`) giúp sinh viên dễ dàng quan sát điểm số từng môn mà không bị rối mắt.
 - Hỗ trợ tooltip xem chi tiết điểm số khi rê chuột.
 
+### 🤖 Trợ lý AI Cố vấn Học tập Đa tác nhân (Powered by CrewAI)
+- **Tích hợp phi đội Multi-Agent tự hành:** 
+  - **Chuyên viên Phân tích Học lực HITC:** Đánh giá điểm mạnh, môn yếu và cảnh báo rủi ro học vụ.
+  - **Cố vấn Lộ trình & Hướng nghiệp CNTT:** Đưa ra kế hoạch hành động 3-5 bước, gợi ý phương pháp tự học và định hướng chuyên ngành (Web, Mobile, Network, Security, AI/Data).
+- **Hỗ trợ linh hoạt mô hình:** OpenAI (GPT-4o-mini, GPT-4o) và Google Gemini (Gemini 1.5 Flash/Pro, Gemini 2.0).
+
 ---
 
 ## 🛠️ 3. Công nghệ sử dụng
@@ -79,6 +85,7 @@ Dự án ra đời nhằm giải quyết nhu cầu thực tế của sinh viên 
 | **Streamlit** | Latest | Framework xây dựng giao diện Web tương tác cao |
 | **Pandas** | Latest | Xử lý cấu trúc bảng dữ liệu điểm (DataFrame), tổng hợp số liệu |
 | **Altair** | Latest | Xây dựng đồ thị trực quan hóa dữ liệu tương tác chuyên sâu |
+| **CrewAI** | Latest | Nền tảng điều phối Multi-Agent AI phân tích và tư vấn học tập |
 
 ---
 
@@ -90,7 +97,10 @@ DUAN-main/
 ├── .gitignore              # Danh sách các file/thư mục bỏ qua khi đẩy lên Git
 ├── README.md               # Tài liệu hướng dẫn sử dụng và giới thiệu dự án
 ├── requirements.txt        # Danh mục thư viện phụ thuộc bắt buộc
+├── chay_ung_dung.bat       # Phím tắt 1-click tự động chạy trên Windows máy trường
 ├── app.py                  # Mã nguồn chính của ứng dụng HITC Portal
+├── grade_calculator.py     # Module chuẩn hóa và tính điểm trọng số học phần (10%-30%-60%)
+├── ai_advisor.py           # Module điều phối phi đội AI Agents (CrewAI)
 └── test_app.py             # Kịch bản kiểm thử tự động thuật toán tính điểm
 ```
 
