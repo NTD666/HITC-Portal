@@ -94,14 +94,21 @@ Dự án ra đời nhằm giải quyết nhu cầu thực tế của sinh viên 
 ```text
 DUAN-main/
 │
-├── .gitignore              # Danh sách các file/thư mục bỏ qua khi đẩy lên Git
-├── README.md               # Tài liệu hướng dẫn sử dụng và giới thiệu dự án
-├── requirements.txt        # Danh mục thư viện phụ thuộc bắt buộc
-├── chay_ung_dung.bat       # Phím tắt 1-click tự động chạy trên Windows máy trường
-├── app.py                  # Mã nguồn chính của ứng dụng HITC Portal
-├── grade_calculator.py     # Module chuẩn hóa và tính điểm trọng số học phần (10%-30%-60%)
-├── ai_advisor.py           # Module điều phối phi đội AI Agents (CrewAI)
-└── test_app.py             # Kịch bản kiểm thử tự động thuật toán tính điểm
+├── .gitignore                  # Danh sách các file/thư mục bỏ qua khi đẩy lên Git
+├── README.md                   # Tài liệu hướng dẫn sử dụng và giới thiệu dự án
+├── requirements.txt            # Danh mục thư viện phụ thuộc bắt buộc
+├── chay_ung_dung.bat           # Phím tắt 1-click tự động chạy trên Windows máy trường
+├── day_code_len_github.bat     # Phím tắt 1-click đẩy code lên GitHub
+├── app.py                      # Mã nguồn chính của ứng dụng HITC Portal
+├── grade_calculator.py         # Module chuẩn hóa và tính điểm trọng số học phần (10%-30%-60%)
+├── ai_advisor.py               # Module điều phối phi đội AI Agents (CrewAI) & Cố vấn nội bộ
+├── test_app.py                 # File runner chạy bộ kiểm thử tự động
+└── tests/                      # Thư mục kiểm thử tự động chuẩn Pytest
+    ├── __init__.py
+    ├── README.md               # Tài liệu chi tiết về bộ kiểm thử
+    ├── test_project_structure.py # Kiểm thử cấu trúc tệp và tính toàn vẹn dự án
+    ├── test_grade_calculator.py  # Kiểm thử quy chế tính điểm trọng số HITC
+    └── test_ai_advisor.py       # Kiểm thử sinh prompt và chế độ cố vấn offline
 ```
 
 ---
@@ -145,23 +152,25 @@ Local URL: http://localhost:8501
 
 ---
 
-## 🧪 6. Hệ thống Kiểm thử Tự động (Automated Testing)
+## 🧪 6. Hệ thống Kiểm thử Tự động (Automated Testing với Pytest)
 
-Dự án đi kèm bộ kiểm thử độc lập trong file `test_app.py` nhằm xác minh tính chính xác của thuật toán tính điểm trung bình trước khi bàn giao hoặc đưa lên máy chủ.
+Dự án được xây dựng hệ thống kiểm thử toàn diện nằm trong thư mục `tests/` theo tiêu chuẩn công nghiệp với **11 bài kiểm thử tự động (11 Test Cases)** bao quát:
+- **Cấu trúc dự án:** Đảm bảo đủ các file bắt buộc và thư viện cần thiết.
+- **Tính toán điểm số:** Tính điểm trọng số (10% - 30% - 60%), GPA tích lũy, các ngưỡng phân loại học lực và xử lý bảng điểm trống.
+- **Trợ lý AI Advisor:** Kiểm tra Prompt tạo ra, Chế độ Cố vấn Tự động Chuẩn HITC (chạy ngoại tuyến không cần API Key) và cơ chế tự phục hồi (fallback).
 
-Chạy kiểm thử bằng lệnh:
+### Cách chạy kiểm thử:
 ```bash
+# Cách 1: Chạy bằng Pytest (Chuẩn quốc tế):
+python -m pytest tests/ -v
+
+# Cách 2: Chạy trực tiếp qua runner script:
 python test_app.py
 ```
 
-**Kịch bản kiểm thử (Test Case):**
-- Giả lập bảng dữ liệu với điểm môn *Ngôn ngữ Python (9.0)* và môn *Cơ sở dữ liệu (7.0)*.
-- Thuật toán xử lý tính trung bình: `(9.0 + 7.0) / 2 = 8.0`.
-- Đối sánh qua `assert`. Khi đạt chuẩn, hệ thống xuất thông báo xác nhận:
+Khi toàn bộ kiểm thử đạt chuẩn, Pytest sẽ xuất thông báo màu xanh xác nhận:
 ```text
-============================================================
- Chúc mừng! Hệ thống kiểm thử tự động đã CHẠY ĐẠT (PASS 10/10).
-============================================================
+============================= 11 passed in 0.04s ==============================
 ```
 
 ---
